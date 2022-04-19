@@ -24,11 +24,10 @@ radio.onReceivedNumber(function (receivedNumber) {
         if (mcqueen_anda == 1) {
             maqueen.motorStop(maqueen.Motors.All)
             maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 120)
-        } else {
-            if (mcqueen_anda == 0) {
-                maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 120)
-                maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, 120)
-            }
+            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 120)
+        } else if (mcqueen_anda == 0) {
+            maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 120)
+            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, 120)
         }
     } else if (receivedNumber == 4) {
         basic.showLeds(`
@@ -41,8 +40,8 @@ radio.onReceivedNumber(function (receivedNumber) {
         if (mcqueen_anda == 1) {
             maqueen.motorStop(maqueen.Motors.All)
             maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 120)
-        }
-        if (mcqueen_anda == 0) {
+            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 120)
+        } else if (mcqueen_anda == 0) {
             maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 120)
             maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 120)
         }
