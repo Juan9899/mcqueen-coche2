@@ -1,7 +1,7 @@
 radio.onReceivedNumber(function (receivedNumber) {
     if (receivedNumber == 1) {
         maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 120)
-        mcqueen_anda += 1
+        mcqueen_anda = 1
         basic.showLeds(`
             . . # . .
             . # # # .
@@ -11,7 +11,7 @@ radio.onReceivedNumber(function (receivedNumber) {
             `)
     } else if (receivedNumber == 2) {
         maqueen.motorStop(maqueen.Motors.All)
-        mcqueen_anda += 0
+        mcqueen_anda = 0
         basic.showIcon(IconNames.No)
     } else if (receivedNumber == 3) {
         basic.showLeds(`
@@ -47,23 +47,16 @@ radio.onReceivedNumber(function (receivedNumber) {
         }
     } else if (receivedNumber == 7) {
         maqueen.motorStop(maqueen.Motors.All)
+        Siguelinea = 0
     } else if (receivedNumber == 8) {
-        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
-            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 20)
-        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
-            maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 20)
-            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 0)
-        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
-            maqueen.motorStop(maqueen.Motors.M1)
-            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
-        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
-            maqueen.motorStop(maqueen.Motors.All)
-        }
+        Siguelinea = 1
     }
 })
+let Siguelinea = 0
 let mcqueen_anda = 0
 radio.setGroup(86)
 mcqueen_anda = 0
+Siguelinea = 0
 music.playMelody("E B C5 A B G A F ", 120)
 basic.showString("hola")
 basic.forever(function () {
@@ -85,5 +78,20 @@ basic.forever(function () {
             # . . . #
             `)
         radio.sendNumber(9)
+    }
+})
+basic.forever(function () {
+    if (Siguelinea == 1) {
+        if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 20)
+        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0) {
+            maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 20)
+            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 0)
+        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+            maqueen.motorStop(maqueen.Motors.M1)
+            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 20)
+        } else if (maqueen.readPatrol(maqueen.Patrol.PatrolLeft) == 1 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 1) {
+            maqueen.motorStop(maqueen.Motors.All)
+        }
     }
 })
